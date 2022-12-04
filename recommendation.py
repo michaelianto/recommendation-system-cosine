@@ -13,7 +13,7 @@ def load_dataset():
   
   all_dataset = all_dataset.dropna(how='all')
   size = all_dataset.shape[0]
-  all_dataset = all_dataset[:int(size/10)]
+  all_dataset = all_dataset[:int(size/30)]
   return all_dataset
 
 def add_user_id(dataset):
