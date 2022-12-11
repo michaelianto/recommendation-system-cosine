@@ -106,7 +106,6 @@ if user_id != "Select ID":
     st.write("Items that will be recommended to User ID " + str(choose_b_user) + " is/are : ")
     
     if len(items_to_recommend_to_B) == 0:
-      print("IN IF")
       new_df = dataset[dataset['User ID'] == choose_b_user]
       new_df = dataset[~dataset['Product'].isin(set(new_df['Product']))]
       st.dataframe(pd.unique(new_df['Product']))
