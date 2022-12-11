@@ -12,8 +12,8 @@ def load_dataset():
     all_dataset = pd.concat([all_dataset, dataset])
   
   all_dataset = all_dataset.dropna(how='all')
-  size = all_dataset.shape[0]
-  all_dataset = all_dataset[:int(size/30)]
+  res = dataset['Order ID'].value_counts()
+  all_dataset = all_dataset[all_dataset['Order ID'].isin(res.index[res.gt(1)])]
   return all_dataset
 
 def add_user_id(dataset):
@@ -104,7 +104,14 @@ if user_id != "Select ID":
         ['Product']
     ].drop_duplicates().set_index('Product')
     st.write("Items that will be recommended to User ID " + str(choose_b_user) + " is/are : ")
-    st.dataframe(items_to_recommend_to_B)
+    
+    if len(items_to_recommend_to_B) == 0:
+      print("IN IF")
+      new_df = dataset[dataset['User ID'] == choose_b_user]
+      new_df = dataset[~dataset['Product'].isin(set(new_df['Product']))]
+      st.dataframe(pd.unique(new_df['Product']))
+    else:
+      st.dataframe(items_to_recommend_to_B)
 
 
 
